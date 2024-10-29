@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Students</h1>
+
+    <hr>
+
+    <p>Id is: {{id}}</p>
+    <p>Name is: {{name}}</p>
+    <p>Subject is: {{subject}}</p>
+    <p>Class is: {{class}}</p>
+
+
+    <a href="{%url 'home'%}">Click here to go Home page</a>
+    <br>
+    <a href="{%url 'about'%}">Click here to go About page</a>
+    <br>
+    <a href="{%url 'services'%}">Click here to go Services page</a>
+    <br>
+    <a href="{%url 'contact'%}">Click here to go Contact page</a>
+
+    {% if id %}
+
+        <p>If block</p>
+
+    {%else %}
+    
+        <p>Else Block</p>
+
+    {% endif %}
+
+    <hr>
+
+    <ul>
+        {% for subject in subjects %}
+        <li>
+            {{subject}}
+        </li>
+        {% endfor %}
+
+    </ul>
+</body>
+</html>

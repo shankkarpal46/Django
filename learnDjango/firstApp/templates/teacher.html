@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <H1>Teacher</H1>
+
+    <p>Teacher id is:{{id}}</p>
+    <p>Teacher name is: {{name}}</p>
+    <p>Subject taught by teacher is: {{subjects}}</p>
+    <p>Salary of teacher is is: {{salary}}</p>
+
+    {% if id %}
+
+        <p>If block</p>
+
+    {%else %}
+    
+        <p>Else Block</p>
+
+    {% endif %}
+
+    <hr>
+
+   <ul>
+        {% for subject in subjects %}
+            {% if forloop.first%}
+                <li style="color:red">{{subject}}</li>
+            
+            {% else %}
+                <li style="color:green">{{subject}}</li>
+            {%endif%}
+                <ul>
+                    <li><b>counter:{{forloop.counter}}</b></li>
+                    <li><b>counter:{{forloop.counter0}}</b></li>
+                    <li><b>counter:{{forloop.revcounter}}</b></li>
+                    <li><b>counter:{{forloop.revcounter0}}</b></li>
+                    <li><b>first:{{forloop.first}}</b></li>
+                    <li><b>first:{{forloop.last}}</b></li>
+                </ul>
+        {% endfor %}
+   </ul>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <p> Do you want to delete product??</p>
+
+        <p>{{product}}</p>
+
+        {% include "card.html" with p=product %}
+        <form action="" method="post">
+                {% csrf_token %}
+
+                <input type="submit">
+        </form>
+{% endblock content %}

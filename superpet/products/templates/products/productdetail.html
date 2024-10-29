@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% comment %} <p>{{product}}</p> {% endcomment %}
+
+    {% include "card.html" with p=product %}
+{% endblock content %} 

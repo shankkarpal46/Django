@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <p>{{category_obj}}</p>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for product in category_obj.product_set.all %}
+            {% include "card.html" with p=product %}
+        {% endfor %}
+
+{% endblock content %}
+
