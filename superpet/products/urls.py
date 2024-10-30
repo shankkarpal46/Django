@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-
 urlpatterns = [
     #path('',views.products,name = "products"),
     path('',views.ProductListView.as_view(),name = "products"),

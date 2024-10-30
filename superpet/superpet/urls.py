@@ -21,6 +21,7 @@ from . import views
 from products import urls
 from django.conf.urls.static import static 
 from . import settings
+from cart import urls
 
 # . means same package.
 
@@ -33,6 +34,7 @@ urlpatterns = [
     path('register/',views.register, name = "register"),
     path('products/', include('products.urls')),
     path('logout/',views.user_logout,name = "logout"),
+    path('cart/',include('cart.urls')),
 ]
 
 urlpatterns+=static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
