@@ -2,5 +2,23 @@
 
 {% block content %}
     <h1>Cart</h1>
-{% endblock content %}
+    <h1>Total Price :{{total}}</h1>
+    {% for cartitem in cartitems %}
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="{{cartitem.products.product_image.url}}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{cartitem.products.product_name}}</h5>
+              <p class="card-text">{{cartitem.quantity}} </p>
+              <p class="card-text"><small class="text-muted">{{cartitem.products.product_price}}</small></p>
+              <p class="card-text"><p class="card-text">Description :{{cartitem.products.product_description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    {% endblock content %}
 
