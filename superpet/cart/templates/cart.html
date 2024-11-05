@@ -11,10 +11,18 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">{{cartitem.products.product_name}}</h5>
-              <p class="card-text">{{cartitem.quantity}} </p>
-              <p class="card-text"><small class="text-muted">{{cartitem.products.product_price}}</small></p>
+              <h5 class="card-title">Product Name:{{cartitem.products.product_name}}</h5>
+              <p class="card-text">Quantity:{{cartitem.quantity}} </p>
+              <p class="card-text"><small class="text-muted">Price:{{cartitem.products.product_price}}</small></p>
               <p class="card-text"><p class="card-text">Description :{{cartitem.products.product_description}}</p>
+              <form action="{% url 'update-cart' cartitem.id %}">
+                <button type="button" onclick="updateQuantity(-1,{{cartitem.id}})">-</button>
+                <input type="number" name="quantity" id="quantity{{cartitem.id}}" value = "{{cartitem.quantity}}" min="0" max ="10">
+                <button type="button" onclick="updateQuantity(1,{{cartitem.id}})">+</button>
+                <input class="btn btn-primary" type="submit" value="Update Cart">
+              </form>
+
+              <a class="btn btn-danger" href="{% url 'delete-cart' cartitem.id %}" role="button">Delete</a>
             </div>
           </div>
         </div>
@@ -22,3 +30,4 @@
     {% endfor %}
     {% endblock content %}
 
+    

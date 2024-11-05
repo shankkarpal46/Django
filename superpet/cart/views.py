@@ -29,3 +29,16 @@ def display_cart(request):
         total += cartitem.quantity * cartitem.products.product_price
     return render(request,"cart.html",{"cartitems": cartitems,"total":total})
 
+def update_cart(request,cartitemId):
+    cartitem = CartItem.objects.get(id = cartitemId)
+    cartitem.quantity = request.GET.get("quantity")
+    cartitem.save()
+    return HttpResponseRedirect("/cart")
+
+def delete_cartitem(request,cartitemId):
+    cartitem =CartItem.objects.get(id = cartitemId)
+    cartitem.delete()
+    return HttpResponseRedirect("/cart")
+
+def checkout(request):
+    return render(request,"checkout.html")
