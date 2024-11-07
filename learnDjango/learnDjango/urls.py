@@ -27,5 +27,6 @@ urlpatterns = [
     path('courses/',views.courses),
     path('require/',views.requirements),
     path('data/',views.data),
-    path('class-based-view/',views.MyView.as_view(),name="class-based-view")
+    path('class-based-view/',views.MyView.as_view(),name="class-based-view"),
+    path('template-filters/',views.learn_filter,name="template-filter"),
 ]

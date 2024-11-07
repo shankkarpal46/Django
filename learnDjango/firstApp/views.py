@@ -32,4 +32,7 @@ class MyView(View):
     
     def post(self,request):
         return render(request,"success.html")
+    
+def learn_filter(request):
+    return render(request,"templates_filters.html",{"data":"Django"})
 

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load custom_filter %}
 
 {% block content %}
     <h1>Cart</h1>
@@ -28,6 +29,29 @@
         </div>
       </div>
     {% endfor %}
+    <table class="table" style="text-align: center;">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Product Price</th>
+          <th scope="col">Product Quantity</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cartitem in cartitems %}
+        <tr>
+          <th scope="row">{{cartitem.products.id}}</th>
+          <td>{{cartitem.products.product_name}}</td>
+          <td>{{cartitem.products.product_price}}</td>
+          <td>{{cartitem.quantity}}</td>
+          <td>{{cartitem.quantity|multiply:cartitem.products.product_price}}</td>
+          <td>{{cartitem.quantity|div:cartitem.products.product_price}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% endblock content %}
 
     
