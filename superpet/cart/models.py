@@ -22,6 +22,9 @@ class Order(models.Model):
     state = models.CharField(max_length=100,null=False)
     pincode = models.IntegerField(null=False)
     phone_number = models.BigIntegerField(null=False)
+    created_at = models.DateTimeField(auto_now_add = True,null=True)
+    updated_at = models.DateTimeField(auto_now = True, null=True)
+    paid = models.BooleanField(default = False)
 
-
-
+    def __str__(self):
+        return f"{self.user.first_name} || {self.created_at}"

@@ -1,5 +1,7 @@
 from django.shortcuts import render,HttpResponseRedirect
-from .models import Cart,CartItem,Product
+from .models import Cart,CartItem,Product,Order
+from .forms import OrderForm
+import uuid
 #from products.models import Product
 # Create your views here.
 
@@ -41,4 +43,22 @@ def delete_cartitem(request,cartitemId):
     return HttpResponseRedirect("/cart")
 
 def checkout(request):
-    return render(request,"checkout.html")
+    if request.method == 'GET':
+        form = OrderForm()
+        return render(request,"checkout.html",{"form":form})
+    
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            print(form.cleaned_data)
+            Order.objects.create(orderid = uuid.uuid4().hex,
+                                 user = request.user,
+                                 address_line_1= form.cleaned_data["address_line_1"],
+                                 address_line_2 = form.cleaned_data["address_line_2"],
+                                 city = form.cleaned_data["city"],
+                                 state = form.cleaned_data["state"],
+                                 pincode = form.cleaned_data["pincode"],
+                                 phone_number = form.cleaned_data["phone_number"])
+        return HttpResponseRedirect("/cart/checkout")
+    
