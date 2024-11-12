@@ -28,3 +28,10 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user.first_name} || {self.created_at}"
+
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order,on_delete=models.CASCADE)
+    quantity = models.IntegerField(default = 0)
+    products = models.ForeignKey(Product,on_delete=models.PROTECT)
+
+    

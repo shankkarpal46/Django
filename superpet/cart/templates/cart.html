@@ -50,8 +50,11 @@
           <td>{{cartitem.quantity|div:cartitem.products.product_price}}</td>
         </tr>
         {% endfor %}
+
+        
       </tbody>
     </table>
+    <a class="btn btn-primary m-4" href="{% url 'checkout' %}" } role="button">Checkout</a>
     {% endblock content %}
 
     
