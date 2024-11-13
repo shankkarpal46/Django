@@ -3,6 +3,7 @@ from .models import Cart,CartItem,Product,Order,OrderItem
 from .forms import OrderForm
 import uuid
 import razorpay
+from django.views.decorators.csrf import csrf_exempt
 # from products.models import Product
 # Create your views here.
 
@@ -73,9 +74,29 @@ def checkout(request):
     
     
 def payment(request,orderId):
+    order = Order.objects.get(orderid = orderId)
+    orderitems = order.orderitem_set.all()
+    total = 0
+    for orderitem in orderitems:
+        total += orderitem.quantity*orderitem.products.product_price
     client = razorpay.Client(auth=("rzp_test_9OqmIDeq85cvr3", "LVkt6Cs9VskcAarHG1ryJNdr"))
-    
-    data = { "amount": 500, "currency": "INR", "receipt": orderId}
+    data = {"amount": total*100, "currency": "INR", "receipt": orderId}
 
     payment = client.order.create(data=data)
     return render(request,"payment.html",{"payment":payment})
+
+@csrf_exempt
+def payment_success(request,orderId):
+    razorpay_response = {
+        "razorpay_payment_id":request.POST.get("razorpay_payment_id"),
+        "razorpay_order_id":request.POST.get("razorpay_order_id"),
+        "razorpay_signature":request.POST.get("razorpay_signature"),
+    }
+    client=razorpay.Client(auth=("rzp_test_9OqmIDeq85cvr3","LVkt6Cs9VskcAarHG1ryJNdr"))
+    payment_check=client.utility.verify_payment_signature(razorpay_response)
+    if payment_check:
+        print("order is paid")
+        order = Order.objects.get(orderid=orderId)
+        order.paid = True
+        order.save()
+    return render(request,"success.html")

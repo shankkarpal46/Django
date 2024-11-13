@@ -12,7 +12,7 @@ var options = {
     "description": "Test Transaction",
     "image": "https://example.com/your_logo",
     "order_id": "{{payment.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
+    "callback_url": "{% url 'success' payment.receipt %}",
     "prefill": {
         "name": "Shankkar Pal",
         "email": "shankkar.pal@example.com",
