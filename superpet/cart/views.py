@@ -4,9 +4,13 @@ from .forms import OrderForm
 import uuid
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import send_mail
+from superpet .settings import EMAIL_HOST_USER
+from django.contrib.auth.decorators import login_required
 # from products.models import Product
 # Create your views here.
 
+@login_required(login_url="/login") #if not logged in then directly redirecting to login page.
 def add_to_cart(request,productId):
     print(productId)
     print(request.user)
@@ -24,7 +28,7 @@ def add_to_cart(request,productId):
     cartitem.save() #we are connected with the object
     return HttpResponseRedirect("/products")    
     
-
+@login_required(login_url="/login")
 def display_cart(request):
     currentUser = request.user
     cart = Cart.objects.get(user=currentUser)
@@ -34,17 +38,20 @@ def display_cart(request):
         total += cartitem.quantity * cartitem.products.product_price
     return render(request,"cart.html",{"cartitems": cartitems,"total":total})
 
+@login_required(login_url="/login")
 def update_cart(request,cartitemId):
     cartitem = CartItem.objects.get(id = cartitemId)
     cartitem.quantity = request.GET.get("quantity")
     cartitem.save()
     return HttpResponseRedirect("/cart")
 
+@login_required(login_url="/login")
 def delete_cartitem(request,cartitemId):
     cartitem =CartItem.objects.get(id = cartitemId)
     cartitem.delete()
     return HttpResponseRedirect("/cart")
 
+@login_required(login_url="/login")
 def checkout(request):
     if request.method == 'GET':
         form = OrderForm()
@@ -72,7 +79,7 @@ def checkout(request):
                 OrderItem.objects.create(order = order,quantity = cartitem.quantity, products = cartitem.products)
         return HttpResponseRedirect("/cart/payment/"+order.orderid)
     
-    
+@login_required(login_url="/login")
 def payment(request,orderId):
     order = Order.objects.get(orderid = orderId)
     orderitems = order.orderitem_set.all()
@@ -99,4 +106,8 @@ def payment_success(request,orderId):
         order = Order.objects.get(orderid=orderId)
         order.paid = True
         order.save()
+        send_mail(f"[{order.orderid} placed]",
+                  "Order placed successfully.",
+                  EMAIL_HOST_USER,
+                  ["artilachure@gmail.com","shankkarpal46@gmail.com","tgorivale2@gmailcom"],fail_silently=False)
     return render(request,"success.html")
