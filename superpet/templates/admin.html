@@ -3,7 +3,8 @@
 {% block content %}
 
     <h1 style = "text-align:center">Admin Portal</h1>
-
+    <a class="btn btn-primary" href="{% url 'create-product' %}" role="button">Create Product</a>
+    <p>Total products:{{count}}</p>
     <table class="table">
         <thead>
           <tr>
@@ -19,8 +20,8 @@
             <td scope="row">{{product.id}}</td>
             <td>{{product.product_name}}</td>
             <td>{{product.product_price}}</td>
-            <td><a class="btn btn-success" href="" role="button">Update</a></td>
-            <td><a class="btn btn-danger" href="" role="button">Delete</a></td>
+            <td><a class="btn btn-success" href="{% url 'product-update' product.id %}" role="button">Update</a></td>
+            <td><a class="btn btn-danger" href="{% url 'product-delete' product.id%}" role="button">Delete</a></td>
           </tr>
           {% endfor %}
       </table>
