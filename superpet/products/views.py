@@ -29,7 +29,13 @@ class ProductListView(ListView):
 class ProductDetailView(DetailView):
     model = Product
     template_name = "products/productdetail.html"
-
+    
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context["products"] = Product.customManager.all()
+        context["name"] = "Trupti"
+        return context
+    
 @method_decorator(staff_member_required,name="dispatch")
 class ProductCreateView(CreateView):
     model = Product
@@ -52,3 +58,9 @@ class Category_DetailView(DetailView):
     template_name = "category/categorydetail.html"
     slug_field = "category_slug"
     context_object_name = "category_obj"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
+    

@@ -48,3 +48,5 @@ def user_logout(request):
 def admin(request):
     return render(request,"admin.html",{"products":Product.customManager.all(),"count":Product.customManager.count()})
 
+def profile(request):
+    return render(request,"profile.html")
