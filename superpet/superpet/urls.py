@@ -37,7 +37,7 @@ urlpatterns = [
     path('cart/',include('cart.urls')),
     path('admin-portal',views.admin,name="admin-portal"),
     path('profile/',views.profile,name ="profile"),
-    path('changepassword',views.changePassword,name="changePassword"),
+    path('changepassword/',views.changePassword,name="changePassword"),
 ]
 
 urlpatterns+=static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

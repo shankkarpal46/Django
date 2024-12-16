@@ -5,7 +5,7 @@ import uuid
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
-from superpet .settings import EMAIL_HOST_USER
+from superpet.settings import EMAIL_HOST_USER
 from django.contrib.auth.decorators import login_required
 # from products.models import Product
 # Create your views here.
