@@ -4,6 +4,8 @@ from superpet.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.dispatch import receiver
 from products.models import Product
+from django.template.loader import render_to_string
+
 import datetime
 
 @user_logged_in.connect
@@ -47,7 +49,9 @@ def add_product_signal(sender,instance,created,**kwargs):
         send_mail(f"[placed]",
                   f"Product created.{now}",
                   EMAIL_HOST_USER,
-                  ["artilachure@gmail.com","shankkarpal46@gmail.com","tgorivale2@gmailcom","priyanka.vibhute@itvedant.com"],fail_silently=False)
+                  ["artilachure@gmail.com","shankkarpal46@gmail.com","tgorivale2@gmailcom","priyanka.vibhute@itvedant.com"],
+                  html_message=render_to_string("email.html",{"product":instance}),
+                  fail_silently=False)
         
     if created == False:
         send_mail(f"[placed]",
