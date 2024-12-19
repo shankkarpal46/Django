@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.mail import send_mail
 from superpet.settings import EMAIL_HOST_USER
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse,reverse_lazy
+
 # from products.models import Product
 # Create your views here.
 
@@ -45,11 +47,15 @@ def update_cart(request,cartitemId):
     cartitem.save()
     return HttpResponseRedirect("/cart")
 
-@login_required(login_url="/login")
+#@login_required(login_url="/login")
+@login_required(login_url=reverse_lazy("login"))
 def delete_cartitem(request,cartitemId):
     cartitem =CartItem.objects.get(id = cartitemId)
+    print("=============================reverse==================================")
+    print(reverse("cart"))
     cartitem.delete()
-    return HttpResponseRedirect("/cart")
+    return HttpResponseRedirect(reverse("cart"))
+    #return HttpResponseRedirect("/cart")    
 
 @login_required(login_url="/login")
 def checkout(request):
